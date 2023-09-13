@@ -1,4 +1,4 @@
-package steamgamesinfo
+package steam
 
 import (
 	"encoding/json"
