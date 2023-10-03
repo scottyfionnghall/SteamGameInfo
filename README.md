@@ -25,29 +25,6 @@ type AppList struct {
 }
 ```
 
-### func(AppList) GetAppList
-
-```go
-func (a *AppList) GetAppList()
-```
-
-Initialize variable of type AppList and make response.json file. Function checks if response.json file exists, if not we send request to SteamWebAPI to get list of games and their ID. We create such file so we can later use it than sending each time new request.
-
-### func(AppList) Search
-```go
-func (a AppList) Search(x string) int
-```
-
-Using Binary Search algorithm returns ID of entered game title.
-
-### func(AppList) GetGameSummary
-
-```go
-func (g AppList) GetGameSummary(name string) GameSummary 
-```
-
-Returns a variable of type GameSummary.
-
 ### type GameSummary
 
 ```go
@@ -80,7 +57,7 @@ type Author struct {
 }
 ```
 
-type Reviews
+### type Reviews
 
 ```go
 type Reviews struct {
@@ -103,4 +80,26 @@ type Reviews struct {
 }
 ```
 
+### func(AppList) GetAppList
 
+```go
+func GetAppList() (*AppList, error)
+```
+
+Initialize variable of type AppList and makes response.json file. GetAppList checks if response.json file exists, if not we send request to SteamWebAPI to get list of games and their ID. We create such file so we can later use it than sending each time new request.
+
+### func(AppList) GetSteamAppId
+
+```go
+func (g AppList) GetSteamAppId(x string) (int, error)
+```
+
+Using Binary Search algorithm returns Steam ID of entered game title.
+
+### func(AppList) GetGameSummary
+
+```go
+func (g AppList) GetGameSummary(name string) (*GameSummary, error)
+```
+
+Returns a variable of type GameSummary. Takes a string with a Steam game name. Steam game name must be the same as it is on Steam page.

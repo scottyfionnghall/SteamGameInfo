@@ -1,11 +1,17 @@
 package steam
 
-import (
-	"encoding/json"
-	"fmt"
-	"io"
-	"net/http"
-)
+// Type to contain Steam response
+type AppList struct {
+	AppList struct {
+		Apps []Game `json:"apps"`
+	} `json:"applist"`
+}
+
+// Type to contain basic info about a certian game
+type Game struct {
+	AppId int    `json:"appid"`
+	Name  string `json:"name"`
+}
 
 // Type describing game summery from steam
 type GameSummary struct {
@@ -49,22 +55,4 @@ type Reviews struct {
 	WrittenDuringEarlyAccess bool    `json:"written_during_early_access"`
 	HiddenInSteamChina       bool    `json:"hidden_in_steam_china"`
 	SteamChinaLocation       string  `json:"steam_china_location"`
-}
-
-// Function to create and return GameSummary based on the name of the game
-func (g AppList) GetGameSummary(name string) GameSummary {
-	var r GameSummary
-	index := g.Search(name)
-	appid := g.AppList.Apps[index].AppId
-	resp, err := http.Get(fmt.Sprint("http://store.steampowered.com/appreviews/", appid, "?json=1"))
-	if err != nil {
-		panic(err)
-	}
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		panic(err)
-	}
-	json.Unmarshal(body, &r)
-	return r
 }
