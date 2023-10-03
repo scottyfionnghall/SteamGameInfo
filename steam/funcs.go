@@ -48,7 +48,7 @@ func GetAppList() (*AppList, error) {
 }
 
 // Binary Search algorithm to find appid of a game.
-// Returns int if game found, else returns 0
+// Returns AppId as int if game found, else returns 0
 func (g AppList) GetSteamAppId(x string) (int, error) {
 	arr := g.AppList.Apps
 	l := 0
